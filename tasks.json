@@ -1,0 +1,623 @@
+{
+    "project": {
+        "name": "Iris Classification with Naive Bayes",
+        "version": "1.0",
+        "estimatedTime": "2 hours",
+        "status": "completed",
+        "startDate": "2025-11-30",
+        "completionDate": "2025-11-30"
+    },
+    "phases": [
+        {
+            "id": "phase-1",
+            "name": "Planning & Architecture",
+            "duration": "15 minutes",
+            "status": "completed",
+            "tasks": [
+                {
+                    "id": "task-1.1",
+                    "title": "Design System Architecture",
+                    "description": "Plan modular structure with separation of concerns",
+                    "priority": "P0",
+                    "estimatedTime": "5 min",
+                    "status": "completed",
+                    "deliverables": [
+                        "Architecture diagram (mental model)",
+                        "Module responsibilities defined"
+                    ],
+                    "dependencies": []
+                },
+                {
+                    "id": "task-1.2",
+                    "title": "Define Module Interfaces",
+                    "description": "Specify function signatures and data flow between modules",
+                    "priority": "P0",
+                    "estimatedTime": "5 min",
+                    "status": "completed",
+                    "deliverables": [
+                        "Function signatures",
+                        "Type definitions"
+                    ],
+                    "dependencies": [
+                        "task-1.1"
+                    ]
+                },
+                {
+                    "id": "task-1.3",
+                    "title": "Plan Implementation Strategy",
+                    "description": "Decide on Gaussian Naive Bayes approach, logging strategy, visualization needs",
+                    "priority": "P0",
+                    "estimatedTime": "5 min",
+                    "status": "completed",
+                    "deliverables": [
+                        "Implementation plan",
+                        "Tool selection (NumPy, Pandas, Matplotlib, Sklearn)"
+                    ],
+                    "dependencies": [
+                        "task-1.2"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "phase-2",
+            "name": "Data Management Module",
+            "duration": "15 minutes",
+            "status": "completed",
+            "tasks": [
+                {
+                    "id": "task-2.1",
+                    "title": "Implement Data Loading",
+                    "description": "Create function to load Iris.csv using pandas, extract features and labels",
+                    "priority": "P0",
+                    "estimatedTime": "5 min",
+                    "status": "completed",
+                    "deliverables": [
+                        "src/data_loader.py (partial)"
+                    ],
+                    "acceptanceCriteria": [
+                        "Loads 150 samples",
+                        "4 features extracted",
+                        "Species labels encoded to integers (0, 1, 2)"
+                    ],
+                    "dependencies": [
+                        "task-1.3"
+                    ]
+                },
+                {
+                    "id": "task-2.2",
+                    "title": "Implement Stratified Split",
+                    "description": "Create 75/25 train-test split maintaining class distribution",
+                    "priority": "P0",
+                    "estimatedTime": "5 min",
+                    "status": "completed",
+                    "deliverables": [
+                        "stratified_split() function"
+                    ],
+                    "acceptanceCriteria": [
+                        "75% training (112 samples)",
+                        "25% test (38 samples)",
+                        "Class distribution maintained",
+                        "Reproducible with seed=42"
+                    ],
+                    "dependencies": [
+                        "task-2.1"
+                    ]
+                },
+                {
+                    "id": "task-2.3",
+                    "title": "Add Data Logging",
+                    "description": "Log dataset statistics, shapes, class distributions",
+                    "priority": "P0",
+                    "estimatedTime": "5 min",
+                    "status": "completed",
+                    "deliverables": [
+                        "Complete src/data_loader.py (98 lines)"
+                    ],
+                    "acceptanceCriteria": [
+                        "Logs dataset shape",
+                        "Logs class distribution",
+                        "Logs train/test split info"
+                    ],
+                    "dependencies": [
+                        "task-2.2"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "phase-3",
+            "name": "NumPy Naive Bayes Implementation",
+            "duration": "30 minutes",
+            "status": "completed",
+            "tasks": [
+                {
+                    "id": "task-3.1",
+                    "title": "Create GaussianNaiveBayesNumPy Class",
+                    "description": "Set up class structure with __init__, fit, predict methods",
+                    "priority": "P0",
+                    "estimatedTime": "5 min",
+                    "status": "completed",
+                    "deliverables": [
+                        "Class skeleton in src/naive_bayes_numpy.py"
+                    ],
+                    "dependencies": [
+                        "task-2.3"
+                    ]
+                },
+                {
+                    "id": "task-3.2",
+                    "title": "Implement Training (fit method)",
+                    "description": "Calculate priors, means, and variances for each class and feature",
+                    "priority": "P0",
+                    "estimatedTime": "10 min",
+                    "status": "completed",
+                    "deliverables": [
+                        "fit() method with parameter storage"
+                    ],
+                    "acceptanceCriteria": [
+                        "Calculates class priors: P(y)",
+                        "Calculates feature means: μ[class][feature]",
+                        "Calculates feature variances: σ²[class][feature]",
+                        "Logs all learned parameters"
+                    ],
+                    "dependencies": [
+                        "task-3.1"
+                    ]
+                },
+                {
+                    "id": "task-3.3",
+                    "title": "Implement Gaussian PDF",
+                    "description": "Create helper function for Gaussian probability density",
+                    "priority": "P0",
+                    "estimatedTime": "5 min",
+                    "status": "completed",
+                    "deliverables": [
+                        "_gaussian_pdf() method"
+                    ],
+                    "acceptanceCriteria": [
+                        "Implements formula: (1/√(2πσ²)) × exp(-(x-μ)²/(2σ²))",
+                        "Adds epsilon for numerical stability"
+                    ],
+                    "dependencies": [
+                        "task-3.2"
+                    ]
+                },
+                {
+                    "id": "task-3.4",
+                    "title": "Implement Prediction (predict method)",
+                    "description": "Calculate posteriors using log probabilities, return class with max probability",
+                    "priority": "P0",
+                    "estimatedTime": "10 min",
+                    "status": "completed",
+                    "deliverables": [
+                        "predict() method",
+                        "score() method for accuracy"
+                    ],
+                    "acceptanceCriteria": [
+                        "Uses log probabilities to avoid underflow",
+                        "Predicts correct class (argmax posterior)",
+                        "Returns NumPy array of predictions",
+                        "Accuracy > 90%"
+                    ],
+                    "dependencies": [
+                        "task-3.3"
+                    ]
+                },
+                {
+                    "id": "task-3.5",
+                    "title": "Create Feature Distribution Plots",
+                    "description": "Generate histograms showing feature distributions by class",
+                    "priority": "P0",
+                    "estimatedTime": "5 min",
+                    "status": "completed",
+                    "deliverables": [
+                        "plot_feature_distributions() function",
+                        "Complete src/naive_bayes_numpy.py (168 lines)"
+                    ],
+                    "acceptanceCriteria": [
+                        "2x2 subplot grid for 4 features",
+                        "3 overlaid histograms per plot (classes)",
+                        "Saved to logs/ directory",
+                        "Proper labels and legends"
+                    ],
+                    "dependencies": [
+                        "task-3.4"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "phase-4",
+            "name": "Sklearn Naive Bayes Wrapper",
+            "duration": "15 minutes",
+            "status": "completed",
+            "tasks": [
+                {
+                    "id": "task-4.1",
+                    "title": "Create SklearnNaiveBayes Class",
+                    "description": "Wrapper around sklearn.naive_bayes.GaussianNB",
+                    "priority": "P0",
+                    "estimatedTime": "5 min",
+                    "status": "completed",
+                    "deliverables": [
+                        "Class skeleton in src/naive_bayes_sklearn.py"
+                    ],
+                    "dependencies": [
+                        "task-3.5"
+                    ]
+                },
+                {
+                    "id": "task-4.2",
+                    "title": "Implement fit Method with Logging",
+                    "description": "Train sklearn model and log learned parameters (theta, var, priors)",
+                    "priority": "P0",
+                    "estimatedTime": "5 min",
+                    "status": "completed",
+                    "deliverables": [
+                        "fit() method with parameter extraction"
+                    ],
+                    "acceptanceCriteria": [
+                        "Trains sklearn's GaussianNB",
+                        "Logs class priors",
+                        "Logs theta (means)",
+                        "Logs var (variances)"
+                    ],
+                    "dependencies": [
+                        "task-4.1"
+                    ]
+                },
+                {
+                    "id": "task-4.3",
+                    "title": "Implement Prediction and Evaluation",
+                    "description": "Wrapper methods for predict, predict_proba, score, detailed_evaluation",
+                    "priority": "P0",
+                    "estimatedTime": "5 min",
+                    "status": "completed",
+                    "deliverables": [
+                        "predict(), predict_proba(), score() methods",
+                        "detailed_evaluation() with classification report",
+                        "Complete src/naive_bayes_sklearn.py (112 lines)"
+                    ],
+                    "acceptanceCriteria": [
+                        "Generates confusion matrix",
+                        "Logs classification report (precision, recall, F1)",
+                        "Returns accuracy score"
+                    ],
+                    "dependencies": [
+                        "task-4.2"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "phase-5",
+            "name": "Comparison & Visualization Module",
+            "duration": "20 minutes",
+            "status": "completed",
+            "tasks": [
+                {
+                    "id": "task-5.1",
+                    "title": "Implement Prediction Comparison",
+                    "description": "Compare NumPy vs Sklearn predictions element-wise",
+                    "priority": "P0",
+                    "estimatedTime": "7 min",
+                    "status": "completed",
+                    "deliverables": [
+                        "compare_predictions() function"
+                    ],
+                    "acceptanceCriteria": [
+                        "Calculates accuracy for both",
+                        "Computes agreement rate",
+                        "Identifies disagreement indices",
+                        "Logs precision, recall, F1 for both"
+                    ],
+                    "dependencies": [
+                        "task-4.3"
+                    ]
+                },
+                {
+                    "id": "task-5.2",
+                    "title": "Create Confusion Matrix Visualizations",
+                    "description": "Side-by-side confusion matrices for comparison",
+                    "priority": "P0",
+                    "estimatedTime": "8 min",
+                    "status": "completed",
+                    "deliverables": [
+                        "plot_confusion_matrices() function"
+                    ],
+                    "acceptanceCriteria": [
+                        "1x2 subplot layout",
+                        "Different colormaps (Blues, Greens)",
+                        "Annotated cells with counts",
+                        "Saved to logs/confusion_matrices.png"
+                    ],
+                    "dependencies": [
+                        "task-5.1"
+                    ]
+                },
+                {
+                    "id": "task-5.3",
+                    "title": "Write Difference Analysis",
+                    "description": "Explain potential reasons for differences between implementations",
+                    "priority": "P0",
+                    "estimatedTime": "5 min",
+                    "status": "completed",
+                    "deliverables": [
+                        "explain_differences() function",
+                        "Complete src/comparison.py (179 lines)"
+                    ],
+                    "acceptanceCriteria": [
+                        "Discusses numerical precision",
+                        "Explains variance estimation methods",
+                        "Covers regularization (epsilon)",
+                        "Logs comprehensive explanation"
+                    ],
+                    "dependencies": [
+                        "task-5.2"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "phase-6",
+            "name": "Main Orchestration & Logging",
+            "duration": "15 minutes",
+            "status": "completed",
+            "tasks": [
+                {
+                    "id": "task-6.1",
+                    "title": "Setup Logging Configuration",
+                    "description": "Configure dual logging to console and file with timestamps",
+                    "priority": "P0",
+                    "estimatedTime": "5 min",
+                    "status": "completed",
+                    "deliverables": [
+                        "setup_logging() function in main.py"
+                    ],
+                    "acceptanceCriteria": [
+                        "File handler writes to logs/iris_classification.log",
+                        "Console handler outputs to terminal",
+                        "Format includes timestamp, module, level, message",
+                        "Creates logs/ directory if missing"
+                    ],
+                    "dependencies": [
+                        "task-5.3"
+                    ]
+                },
+                {
+                    "id": "task-6.2",
+                    "title": "Implement 8-Step Pipeline",
+                    "description": "Orchestrate complete workflow from data loading to visualization",
+                    "priority": "P0",
+                    "estimatedTime": "10 min",
+                    "status": "completed",
+                    "deliverables": [
+                        "main() function",
+                        "Complete main.py (128 lines)"
+                    ],
+                    "acceptanceCriteria": [
+                        "Step 1: Load and split data",
+                        "Step 2: Train NumPy model",
+                        "Step 3: Test NumPy model",
+                        "Step 4: Train Sklearn model",
+                        "Step 5: Test Sklearn model",
+                        "Step 6: Compare results",
+                        "Step 7: Generate visualizations",
+                        "Step 8: Analyze differences",
+                        "Final summary logged"
+                    ],
+                    "dependencies": [
+                        "task-6.1"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "phase-7",
+            "name": "Testing & Verification",
+            "duration": "10 minutes",
+            "status": "completed",
+            "tasks": [
+                {
+                    "id": "task-7.1",
+                    "title": "Setup Virtual Environment",
+                    "description": "Create venv and install dependencies",
+                    "priority": "P0",
+                    "estimatedTime": "3 min",
+                    "status": "completed",
+                    "deliverables": [
+                        "venv/ directory",
+                        "requirements.txt file"
+                    ],
+                    "acceptanceCriteria": [
+                        "Virtual environment created",
+                        "All dependencies installed",
+                        "No version conflicts"
+                    ],
+                    "dependencies": [
+                        "task-6.2"
+                    ]
+                },
+                {
+                    "id": "task-7.2",
+                    "title": "Run Complete Pipeline",
+                    "description": "Execute main.py and verify all steps complete successfully",
+                    "priority": "P0",
+                    "estimatedTime": "2 min",
+                    "status": "completed",
+                    "deliverables": [
+                        "Execution logs",
+                        "Generated visualizations"
+                    ],
+                    "acceptanceCriteria": [
+                        "Exit code 0",
+                        "No errors or exceptions",
+                        "Both models achieve >90% accuracy",
+                        "All log files generated"
+                    ],
+                    "dependencies": [
+                        "task-7.1"
+                    ]
+                },
+                {
+                    "id": "task-7.3",
+                    "title": "Verify Line Counts",
+                    "description": "Ensure all modules respect 200-line limit",
+                    "priority": "P0",
+                    "estimatedTime": "2 min",
+                    "status": "completed",
+                    "deliverables": [
+                        "Line count verification"
+                    ],
+                    "acceptanceCriteria": [
+                        "main.py < 200 lines",
+                        "data_loader.py < 200 lines",
+                        "naive_bayes_numpy.py < 200 lines",
+                        "naive_bayes_sklearn.py < 200 lines",
+                        "comparison.py < 200 lines"
+                    ],
+                    "dependencies": [
+                        "task-7.2"
+                    ]
+                },
+                {
+                    "id": "task-7.4",
+                    "title": "Validate Results",
+                    "description": "Check accuracy, agreement, and visualizations quality",
+                    "priority": "P0",
+                    "estimatedTime": "3 min",
+                    "status": "completed",
+                    "deliverables": [
+                        "Validation report"
+                    ],
+                    "acceptanceCriteria": [
+                        "NumPy accuracy: 94.44%",
+                        "Sklearn accuracy: 94.44%",
+                        "Agreement: 100%",
+                        "Visualizations display correctly"
+                    ],
+                    "dependencies": [
+                        "task-7.3"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "phase-8",
+            "name": "Documentation",
+            "duration": "Ongoing",
+            "status": "completed",
+            "tasks": [
+                {
+                    "id": "task-8.1",
+                    "title": "Write README.md",
+                    "description": "Comprehensive documentation with setup, usage, technical details",
+                    "priority": "P1",
+                    "estimatedTime": "Completed post-implementation",
+                    "status": "completed",
+                    "deliverables": [
+                        "README.md"
+                    ],
+                    "acceptanceCriteria": [
+                        "Installation instructions",
+                        "Usage examples",
+                        "Technical details",
+                        "Results summary",
+                        "Troubleshooting section"
+                    ],
+                    "dependencies": [
+                        "task-7.4"
+                    ]
+                },
+                {
+                    "id": "task-8.2",
+                    "title": "Create PRD.md",
+                    "description": "Product Requirements Document describing project scope",
+                    "priority": "P2",
+                    "estimatedTime": "Completed post-implementation",
+                    "status": "completed",
+                    "deliverables": [
+                        "PRD.md"
+                    ],
+                    "acceptanceCriteria": [
+                        "Functional requirements",
+                        "Non-functional requirements",
+                        "Technical specifications",
+                        "Success criteria"
+                    ],
+                    "dependencies": [
+                        "task-8.1"
+                    ]
+                },
+                {
+                    "id": "task-8.3",
+                    "title": "Create tasks.json",
+                    "description": "Structured task breakdown in JSON format",
+                    "priority": "P2",
+                    "estimatedTime": "Completed post-implementation",
+                    "status": "completed",
+                    "deliverables": [
+                        "tasks.json (this file)"
+                    ],
+                    "acceptanceCriteria": [
+                        "All phases documented",
+                        "All tasks with estimates",
+                        "Dependencies tracked",
+                        "Status updated"
+                    ],
+                    "dependencies": [
+                        "task-8.2"
+                    ]
+                },
+                {
+                    "id": "task-8.4",
+                    "title": "Add Code Documentation",
+                    "description": "Docstrings for all modules, classes, and functions",
+                    "priority": "P0",
+                    "estimatedTime": "Integrated during development",
+                    "status": "completed",
+                    "deliverables": [
+                        "Module docstrings",
+                        "Function docstrings with type hints"
+                    ],
+                    "acceptanceCriteria": [
+                        "All modules have docstrings",
+                        "All functions documented",
+                        "Type hints present",
+                        "Complex logic commented"
+                    ],
+                    "dependencies": []
+                }
+            ]
+        }
+    ],
+    "summary": {
+        "totalTasks": 28,
+        "completedTasks": 28,
+        "totalEstimatedTime": "2 hours",
+        "actualTime": "~2 hours",
+        "completionRate": "100%"
+    },
+    "metrics": {
+        "codeMetrics": {
+            "totalLines": 685,
+            "moduleCount": 5,
+            "averageLinesPerModule": 137,
+            "maxLinesPerModule": 179,
+            "allModulesUnderLimit": true
+        },
+        "performanceMetrics": {
+            "numpyAccuracy": 0.9444,
+            "sklearnAccuracy": 0.9444,
+            "agreementRate": 1.0,
+            "executionTime": "<2 seconds"
+        },
+        "qualityMetrics": {
+            "documentation": "Complete",
+            "logging": "Comprehensive",
+            "visualizations": 2,
+            "testCoverage": "Manual verification"
+        }
+    }
+}
